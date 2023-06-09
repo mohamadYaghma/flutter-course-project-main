@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/drawer.dart';
 import 'models/product.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -13,6 +14,10 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   List<dynamic>? _categoryProducts = [];
+  Map<String, String> userInfo = {
+    'name': 'John Doe',
+    'email': 'johndoe@example.com',
+  };
 
   @override
   void initState() {
@@ -28,89 +33,174 @@ class _ProductsPageState extends State<ProductsPage> {
             appBar: AppBar(
               title: Text(widget.categoryName!),
             ),
-            body: Container(
-                child: ListView.builder(
-                    itemCount: _categoryProducts!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Product product =
-                          Product.fromJson(_categoryProducts![index]);
-                      return Container(
-                        width: 300,
-                        height: 200,
-                        padding: new EdgeInsets.all(10.0),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          color: Colors.red,
-                          elevation: 10,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              ListTile(
-                                leading: Image.network(
-                                  product.image,
-                                  width: 200,
-                                  height: 200,
+            body: LayoutBuilder(
+              builder: (context, constraints) {
+                return GridView.count(
+                  crossAxisCount: constraints.maxWidth > 600 ? 4 : 2,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
+                  padding: EdgeInsets.all(8),
+                  childAspectRatio: constraints.maxWidth > 600
+                      ? (1.7 / 3) // نسبت ارتفاع به عرض برای تبلت‌ها
+                      : (1.6 / 4), // نسبت ارتفاع به عرض برای موبایل‌ها
+                  children: _categoryProducts!.map((product) {
+                    Product parsedProduct = Product.fromJson(product);
+                    return Container(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            FractionallySizedBox(
+                              widthFactor: 1,
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.network(
+                                  parsedProduct.image,
+                                  fit: BoxFit.cover,
                                 ),
-                                title: Text(product.title,
-                                    style: TextStyle(fontSize: 30.0)),
-                                subtitle: Text('Best of Sonu Nigam Music.',
-                                    style: TextStyle(fontSize: 18.0)),
                               ),
-                              ButtonBar(
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  ElevatedButton(
-                                    child: const Text('buy'),
-                                    onPressed: () {/* ... */},
+                                  Text(
+                                    parsedProduct.title,
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    parsedProduct.description.length > 50
+                                        ? parsedProduct.description
+                                                .substring(0, 50) +
+                                            "..."
+                                        : parsedProduct.description,
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Expanded(
+                              child: Container(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Wrap(
+                                      spacing: 5,
+                                      children: <Widget>[
+                                        ElevatedButton(
+                                          child: Icon(
+                                            Icons.favorite_border,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            // انجام عملیات مربوط به علاقه‌مندی
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.red,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: EdgeInsets.all(8),
+                                            minimumSize: constraints.maxWidth >
+                                                    600
+                                                ? Size(48, 48)
+                                                : Size(36,
+                                                    36), // Updated size for larger screens and smaller screens
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          child: Icon(
+                                            Icons.comment,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            // انجام عملیات مربوط به نظرات
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.blue,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: EdgeInsets.all(8),
+                                            minimumSize: constraints.maxWidth >
+                                                    600
+                                                ? Size(48, 48)
+                                                : Size(36,
+                                                    36), // Updated size for larger screens and smaller screens
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          child: Icon(
+                                            Icons.shopping_cart,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            // انجام عملیات مربوط به خرید
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.green,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: EdgeInsets.all(8),
+                                            minimumSize: constraints.maxWidth >
+                                                    600
+                                                ? Size(48, 48)
+                                                : Size(36,
+                                                    36), // Updated size for larger screens and smaller screens
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                    "قیمت : " + parsedProduct.price + "تومان",
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    })));
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+            endDrawer: Align(
+              alignment: Alignment.centerRight,
+              child: CustomDrawer(),
+            ),
+          );
   }
-
-//             Container(
-//               color: Color(0xFFBBDEFB),
-//               child: ListView.builder(
-//                 itemCount: _categoryProducts!.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   Product product = Product.fromJson(_categoryProducts![index]);
-//                   return Container(
-//                       color: Colors.amber[100],
-//                       padding: const EdgeInsets.all(20),
-//                       margin: const EdgeInsets.all(10),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Text('Title: ' + product.title),
-//                           Text('Price: ' + product.price),
-//                           Text('Description: ' + product.description),
-//                           Text('Category: ' + product.category),
-//                           Image.network(
-//                             product.image,
-//                             width: 200,
-//                             height: 200,
-//                           ),
-//                           Text(
-//                               'rating: ${product.rating['rate']}  --- Count ${product.rating['count']}'),
-//                         ],
-//                       ));
-//                 },
-//               ),
-//             ));
-//   }
 
   Future<void> getCategoryProducts() async {
     final response = await http.get(Uri.parse(
         'https://fakestoreapi.com/products/category/${widget.categoryName}'));
 
     if (response.statusCode == 200) {
-      //  final responseBody = utf8.decode(response.bodyBytes);
       final parsed = json.decode(response.body);
       print(parsed);
 

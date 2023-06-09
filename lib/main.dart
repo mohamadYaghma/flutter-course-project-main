@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/caregory_page.dart';
 import 'package:flutter_application_4/login.dart';
+import 'package:flutter_application_4/signIn.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,9 +27,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const CategoryPage(),
+      home: CategoryPage(),
 
       // LoginScreen(),
+      // RegisterPage()
+// LoginScreen(),
     );
   }
 }
