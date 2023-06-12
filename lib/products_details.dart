@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/drawer.dart';
+import 'package:flutter_application_4/comentPage.dart';
 import 'models/product.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -18,6 +19,9 @@ class _ProductsPageState extends State<ProductsPage> {
     'name': 'John Doe',
     'email': 'johndoe@example.com',
   };
+
+  int buyCounter = 0;
+  int likeCounter = 0;
 
   @override
   void initState() {
@@ -87,6 +91,12 @@ class _ProductsPageState extends State<ProductsPage> {
                                       fontSize: 12.0,
                                     ),
                                   ),
+                                  Text(
+                                    parsedProduct.rating.toString(),
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -109,7 +119,9 @@ class _ProductsPageState extends State<ProductsPage> {
                                             color: Colors.white,
                                           ),
                                           onPressed: () {
-                                            // انجام عملیات مربوط به علاقه‌مندی
+                                            setState(() {
+                                              likeCounter++;
+                                            });
                                           },
                                           style: ElevatedButton.styleFrom(
                                             primary: Colors.red,
@@ -131,6 +143,14 @@ class _ProductsPageState extends State<ProductsPage> {
                                             color: Colors.white,
                                           ),
                                           onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductRatingPage(),
+                                              ),
+                                            );
+
                                             // انجام عملیات مربوط به نظرات
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -153,7 +173,9 @@ class _ProductsPageState extends State<ProductsPage> {
                                             color: Colors.white,
                                           ),
                                           onPressed: () {
-                                            // انجام عملیات مربوط به خرید
+                                            setState(() {
+                                              buyCounter++;
+                                            });
                                           },
                                           style: ElevatedButton.styleFrom(
                                             primary: Colors.green,

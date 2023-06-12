@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/caregory_page.dart';
+import 'package:flutter_application_4/comentPage.dart';
 import 'package:flutter_application_4/login.dart';
-import 'package:flutter_application_4/signIn.dart';
+
+import 'package:flutter_application_4/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +30,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: CategoryPage(),
+      // ProductRatingPage(),
+
+      // CategoryPage(),
+
+      // AdvancedSearchPage()
+
+      // NewProductPage()
+
+      // UserListPage(),
+      // CategoryPage(),
 
       // LoginScreen(),
       // RegisterPage()

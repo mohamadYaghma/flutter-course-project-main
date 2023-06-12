@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/abutme.dart';
 import 'package:flutter_application_4/caregory_page.dart';
 import 'package:flutter_application_4/login.dart';
+import 'package:flutter_application_4/newProduct.dart';
+import 'package:flutter_application_4/search.dart';
 import 'package:flutter_application_4/signIn.dart';
+import 'package:flutter_application_4/userList.dart';
+import 'package:flutter_application_4/abutme.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -11,46 +14,22 @@ class CustomDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 10.0, top: 16.0, bottom: 8.0),
-                child: Text(
-                  'Ali',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            accountName: Text(
+              'Ali',
+              style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            accountEmail: Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 10.0, bottom: 16.0),
-                child: Text(
-                  'Ali@yahoo.com',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                  ),
-                ),
+            accountEmail: Text(
+              'Ali@yahoo.com',
+              style: TextStyle(
+                fontSize: 14.0,
               ),
             ),
-            currentAccountPicture: Align(
-              alignment: Alignment.topRight,
-              child: SizedBox(
-                width: 72.0,
-                height: 72.0,
-                child: ClipOval(
-                  child: CircleAvatar(
-                    child: Image.network(
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzLv9vYjAbhKg3ghUTD7yzta9fy4mPFhVYiw&usqp=CAU",
-                    ),
-                    backgroundColor: Colors.transparent,
-                  ),
-                ),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: NetworkImage(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzLv9vYjAbhKg3ghUTD7yzta9fy4mPFhVYiw&usqp=CAU",
               ),
             ),
             decoration: BoxDecoration(
@@ -63,12 +42,11 @@ class CustomDrawer extends StatelessWidget {
               ],
             ),
           ),
-
           ListTile(
-            leading: const Icon(Icons.add_circle),
+            leading: Icon(Icons.add_circle),
             title: Text(
-              ' ساختن حساب کاربری جدید ',
-              textAlign: TextAlign.right, // تنظیم راست چین بودن عنوان منو
+              'ساختن حساب کاربری جدید',
+              textAlign: TextAlign.right,
             ),
             onTap: () {
               Navigator.push(
@@ -79,12 +57,26 @@ class CustomDrawer extends StatelessWidget {
               );
             },
           ),
-
           ListTile(
-            leading: const Icon(Icons.shopping_basket),
+            leading: Icon(Icons.search),
+            title: Text(
+              'جستجوی پیشرفته محصولات',
+              textAlign: TextAlign.right,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AdvancedSearchPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.shopping_basket),
             title: Text(
               'محصولات',
-              textAlign: TextAlign.right, // تنظیم راست چین بودن عنوان منو
+              textAlign: TextAlign.right,
             ),
             onTap: () {
               Navigator.push(
@@ -95,12 +87,41 @@ class CustomDrawer extends StatelessWidget {
               );
             },
           ),
-
           ListTile(
-            leading: const Icon(Icons.outbond),
+            leading: Icon(Icons.add_shopping_cart),
+            title: Text(
+              'اضافه کردن محصول جدید',
+              textAlign: TextAlign.right,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewProductPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.people_alt),
+            title: Text(
+              'اطلاعات کاربران',
+              textAlign: TextAlign.right,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserListPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
             title: Text(
               'خروج از حساب کاربری',
-              textAlign: TextAlign.right, // تنظیم راست چین بودن عنوان منو
+              textAlign: TextAlign.right,
             ),
             onTap: () {
               Navigator.push(
@@ -111,12 +132,11 @@ class CustomDrawer extends StatelessWidget {
               );
             },
           ),
-
           ListTile(
-            leading: const Icon(Icons.person),
+            leading: Icon(Icons.info),
             title: Text(
               'درباره ما',
-              textAlign: TextAlign.right, // تنظیم راست چین بودن عنوان منو
+              textAlign: TextAlign.right,
             ),
             onTap: () {
               Navigator.push(
@@ -127,7 +147,6 @@ class CustomDrawer extends StatelessWidget {
               );
             },
           ),
-          // Add more ListTile widgets for additional menu items
         ],
       ),
     );
