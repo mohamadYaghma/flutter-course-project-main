@@ -91,6 +91,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                       fontSize: 12.0,
                                     ),
                                   ),
+                                  SizedBox(height: 15),
                                   Text(
                                     parsedProduct.rating.toString(),
                                     style: TextStyle(
